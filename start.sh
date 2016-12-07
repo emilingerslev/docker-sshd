@@ -6,6 +6,7 @@ mkdir -p /root/.ssh
 for user in ${GITHUB_USERS//,/ }
 do
   curl -s "https://github.com/$user.keys" >> /root/.ssh/authorized_keys
+  rc=$?; if [[ $rc != 0 ]]; then echo "curl failed for $user"; exit $rc; fi
   echo "Pulled keys for $user"
 done
 
